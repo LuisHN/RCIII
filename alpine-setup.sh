@@ -17,7 +17,7 @@ python3 get-pip.py --break-system-packages
 
 # Install Ansible
 echo "Installing Ansible..."
-python3 -m pip install --user ansible
+python3 -m pip install --user ansible --break-system-packages
 
 # Install Git and Ansible
 echo "Installing Git..."
