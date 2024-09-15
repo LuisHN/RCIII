@@ -6,6 +6,10 @@ echo "Updating package list and upgrading existing packages..."
 apk update
 apk upgrade
 
+# Install Python 3
+echo "Installing Python3..."
+apk add python3
+
 # Install Git and Ansible
 echo "Installing Git and Ansible..."
 apk add git ansible
