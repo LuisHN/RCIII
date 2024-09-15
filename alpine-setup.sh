@@ -12,11 +12,12 @@ apk add python3
 
 # Install Pip 3
 echo "Installing Pip 3..."
-apk add py3-pip
+wget https://bootstrap.pypa.io/get-pip.py
+python3 get-pip.py 
 
 # Install Git and Ansible
-echo "Installing Git and Ansible..."
-apk add git ansible
+echo "Installing Git..."
+apk add git 
 
 # Clone playbook repository (modify this URL to your playbook repository)
 PLAYBOOK_REPO_URL="https://github.com/LuisHN/RCIII.git"
