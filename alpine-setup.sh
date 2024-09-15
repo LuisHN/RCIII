@@ -10,6 +10,10 @@ apk upgrade
 echo "Installing Python3..."
 apk add python3
 
+# Install Pip 3
+echo "Installing Pip 3..."
+apk add py3-pip
+
 # Install Git and Ansible
 echo "Installing Git and Ansible..."
 apk add git ansible
