@@ -33,6 +33,8 @@ configurar_network_interfaces() {
         netmask 255.255.255.128
       
       " >> /etc/network/interfaces
+
+    service networking restart
 }
 
 # alinea b
