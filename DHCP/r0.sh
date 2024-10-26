@@ -47,7 +47,7 @@ iface eth2 inet static
 
 #alinea b
 ativar_encaminhamento_ip() {
-  echo “net.ipv4.ip_forward=1” | tee -a /etc/sysctl.conf 
+  echo "net.ipv4.ip_forward=1" | tee -a /etc/sysctl.conf 
   sysctl -p
 }
 
@@ -114,6 +114,3 @@ configurar_network_interfaces || { echo "Falha ao configurar interfaces de rede"
 ativar_encaminhamento_ip || { echo "Falha ao ativar encaminhamento IP"; exit 1; }
 ativar_static_nat || { echo "Falha ao ativar NAT estático"; exit 1; }
 configure_dhcp || { echo "Falha ao configurar DHCP"; exit 1; }
-
-
-https://t.ly/LHtTV
