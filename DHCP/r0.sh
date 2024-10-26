@@ -41,6 +41,8 @@ configurar_network_interfaces() {
       Post-up route add -net 192.168.1${T}${G}.128 netmask 255.255.255.128 gw 172.20.${T}${G}.2 
       
       " >> /etc/network/interfaces
+
+      service networking restart
 }
 
 #alinea b
