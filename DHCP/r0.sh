@@ -20,25 +20,25 @@ requisitos() {
 configurar_network_interfaces() {
   # Backup do arquivo de configuração de rede
   cp /etc/network/interfaces /etc/network/interfaces.bkp
-
+  :> /etc/network/interfaces
   echo "
-      # Rede exterior 
-      auto eth0 
-        eth0 inet dhcp
+# Rede exterior 
+auto eth0 
+  eth0 inet dhcp
 
-      # Rede interligacao 172.20.TG.0/30
-      auto eth1
-      iface eth1 inet static
-        address 172.20.${T}${G}.1
-        netmask 255.255.255.252
-    
-      # Rede 2 192.168.1TG.0/25
-      auto eth2
-      iface eth2 inet static
-        address 192.168.1${T}${G}.126
-        netmask 255.255.255.128
+# Rede interligacao 172.20.TG.0/30
+auto eth1
+iface eth1 inet static
+  address 172.20.${T}${G}.1
+  netmask 255.255.255.252
 
-      Post-up route add -net 192.168.1${T}${G}.128 netmask 255.255.255.128 gw 172.20.${T}${G}.2 
+# Rede 2 192.168.1TG.0/25
+auto eth2
+iface eth2 inet static
+  address 192.168.1${T}${G}.126
+  netmask 255.255.255.128
+  Post-up route add -net 192.168.1${T}${G}.128 netmask 255.255.255.128 gw 172.20.${T}${G}.2 
+      
       
       " >> /etc/network/interfaces
 
@@ -47,7 +47,7 @@ configurar_network_interfaces() {
 
 #alinea b
 ativar_encaminhamento_ip() {
-  echo “net.ipv4.ip_forward=1” | sudo tee -a /etc/sysctl.conf 
+  echo “net.ipv4.ip_forward=1” | tee -a /etc/sysctl.conf 
   sysctl -p
 }
 
@@ -76,7 +76,7 @@ configure_dhcp() {
   subnet 192.168.1${T}${G}.0 netmask 255.255.255.128 { 
       range 192.168.1${T}${G}.2 192.168.1${T}${G}.${RANGE_END};
       option domain-name-servers 8.8.8.8; 
-      option routers 192.168.1${T}${G}.2; 
+      option routers 192.168.1${T}${G}.126; 
       default-lease-time ${DEFAULT_LEASE_TIME_REDE_1}; 
       max-lease-time ${MAX_LEASE_TIME_REDE_1}; 
    }
@@ -90,7 +90,7 @@ configure_dhcp() {
       subnet 192.168.1${T}${G}.128 netmask 255.255.255.128 { 
           range 192.168.1${T}${G}.130 192.168.1${T}${G}.200; 
           option domain-name-servers 8.8.8.8; 
-          option routers 192.168.1${T}${G}.131; 
+          option routers 192.168.1${T}${G}.129; 
           default-lease-time ${DEFAULT_LEASE_TIME_REDE_1}; 
           max-lease-time ${MAX_LEASE_TIME_REDE_1}; 
       } 
@@ -114,3 +114,6 @@ configurar_network_interfaces || { echo "Falha ao configurar interfaces de rede"
 ativar_encaminhamento_ip || { echo "Falha ao ativar encaminhamento IP"; exit 1; }
 ativar_static_nat || { echo "Falha ao ativar NAT estático"; exit 1; }
 configure_dhcp || { echo "Falha ao configurar DHCP"; exit 1; }
+
+
+https://t.ly/LHtTV

@@ -17,29 +17,29 @@ requisitos() {
 configurar_network_interfaces() {
   # Backup do arquivo de configuração de rede
   cp /etc/network/interfaces /etc/network/interfaces.bkp
-
+  :> /etc/network/interfaces
   echo "
-        # Rede interligacao 172.20.0.0/30 
-      auto eth0 
-      iface eth0 inet static
-        address 172.20.${T}${G}.2
-        netmask 255.255.255.252
-        gateway 172.20.${T}${G}.1
-    
-      # Rede 1 192.168.1TG.128/25
-      auto eth1
-      iface eth1 inet static
-        address 192.168.1${T}${G}.129
-        netmask 255.255.255.128
+# Rede interligacao 172.20.0.0/30 
+auto eth0 
+iface eth0 inet static
+  address 172.20.${T}${G}.2
+  netmask 255.255.255.252
+  gateway 172.20.${T}${G}.1
+
+# Rede 1 192.168.1TG.128/25
+auto eth1
+iface eth1 inet static
+  address 192.168.1${T}${G}.129
+  netmask 255.255.255.128
       
       " >> /etc/network/interfaces
 
-    service networking restart
+      service networking restart
 }
 
 # alinea b
 ativar_encaminhamento_ip() {
-  echo “net.ipv4.ip_forward=1” | sudo tee -a /etc/sysctl.conf 
+  echo "net.ipv4.ip_forward=1" | tee -a /etc/sysctl.conf 
   sysctl -p
 }
 
