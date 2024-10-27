@@ -45,11 +45,12 @@ ativar_encaminhamento_ip() {
 
 # alinea c
 configurar_agente_relay_dhcp() {
-  dhcrelay -i eth0 -i eth1 172.20.${T}${G}.2
+  sed -i "/^DHCRELAY_SERVERS=/c\DHCRELAY_SERVERS=\"172.20.${T}${G}.2\"" /etc/conf.d/dhcrelay
 }
 
 
-requisitos || { echo "Falha ao instalar requisitos"; exit 1; }
+
 configurar_network_interfaces || { echo "Falha ao configurar interfaces de rede"; exit 1; }
 ativar_encaminhamento_ip || { echo "Falha ao ativar encaminhamento IP"; exit 1; }
+requisitos || { echo "Falha ao instalar requisitos"; exit 1; }
 configurar_agente_relay_dhcp || { echo "Falha ao configurar agente relay DHCP"; exit 1; }

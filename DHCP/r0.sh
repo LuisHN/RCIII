@@ -37,7 +37,7 @@ auto eth2
 iface eth2 inet static
   address 192.168.1${T}${G}.126
   netmask 255.255.255.128
-  Post-up route add -net 192.168.1${T}${G}.128 netmask 255.255.255.128 gw 172.20.${T}${G}.2 
+  up route add -net 192.168.1${T}${G}.128 netmask 255.255.255.128 gw 172.20.${T}${G}.2 
       
       
       " >> /etc/network/interfaces
