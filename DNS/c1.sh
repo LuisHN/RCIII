@@ -100,5 +100,5 @@ server {
     rc-service nginx restart
 }
 
-Configurar_App() || { echo "Falha a configurar app"; exit 1; }
-Configurar_Web() || { echo "Falha a configurar web"; exit 1; }
+Configurar_App || { echo "Falha a configurar app"; exit 1; }
+Configurar_Web || { echo "Falha a configurar web"; exit 1; }
