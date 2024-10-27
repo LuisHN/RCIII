@@ -56,47 +56,41 @@ server {
 
 # 2.3 Criar servico APP
 Configurar_App() {
-        apk add --no-cache php7 php7-fpm php7-mysqli mariadb mariadb-client nginx
+     apk add --no-cache nginx
 
-    # Instala o WordPress
-    wget https://wordpress.org/latest.tar.gz -O /tmp/wordpress.tar.gz
-    tar -xzvf /tmp/wordpress.tar.gz -C /var/www
-    mv /var/www/wordpress /var/www/app.rc3${T}${G}.test
+    # Cria o diretório e uma página HTML com informações sobre o grupo
+    mkdir -p /var/www/app.rc3${T}${G}.test
+    echo "
+<!DOCTYPE html>
+<html lang=\"pt\">
+<head>
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <title>Simulador APP</title>
+</head>
+<body>
+    <h1>Isto é uma APP</h1>
 
-    service mariadb setup
-    rc-service mariadb start
-    mysql -e "CREATE DATABASE wordpress;"
-    mysql -e "CREATE USER 'wpuser'@'localhost' IDENTIFIED BY 'password';"
-    mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'localhost';"
-    mysql -e "FLUSH PRIVILEGES;"
+    </ul>
+</body>
+</html>
+" > /var/www/app.rc3${T}${G}.test/index.html
 
-    cp /var/www/app.rc3${T}${G}.test/wp-config-sample.php /var/www/app.rc3${T}${G}.test/wp-config.php
-    sed -i "s/database_name_here/wordpress/" /var/www/app.rc3${T}${G}.test/wp-config.php
-    sed -i "s/username_here/wpuser/" /var/www/app.rc3${T}${G}.test/wp-config.php
-    sed -i "s/password_here/password/" /var/www/app.rc3${T}${G}.test/wp-config.php
-
+    # Configura o NGINX para o servidor web
     echo "
 server {
     listen 80;
     server_name app.rc3${T}${G}.test;
     root /var/www/app.rc3${T}${G}.test;
 
-    index index.php index.html index.htm;
+    index index.html;
 
     location / {
-        try_files \$uri \$uri/ /index.php?\$args;
-    }
-
-    location ~ \.php$ {
-        include fastcgi_params;
-        fastcgi_pass unix:/var/run/php-fpm.sock;
-        fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+        try_files \$uri \$uri/ =404;
     }
 }
 " > /etc/nginx/conf.d/app.rc3${T}${G}.test.conf
 
-    rc-service php-fpm7 restart
     rc-service nginx restart
 }
 
