@@ -11,8 +11,6 @@ G=$2
 
 # 2.3 Criar servico Web
 Configurar_Web() {
-     apk add --no-cache nginx
-
     # Cria o diretório e uma página HTML com informações sobre o grupo
     mkdir -p /var/www/webserver.rc3${T}${G}.test
     echo "
@@ -36,27 +34,11 @@ Configurar_Web() {
 </html>
 " > /var/www/webserver.rc3${T}${G}.test/index.html
 
-    # Configura o NGINX para o servidor web
-    echo "
-server {
-    listen 80;
-    server_name webserver.rc3${T}${G}.test;
-    root /var/www/webserver.rc3${T}${G}.test;
-
-    index index.html;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-}
-" > /etc/nginx/conf.d/webserver.rc3${T}${G}.test.conf
-
-    rc-service nginx restart
 }
 
 # 2.3 Criar servico APP
 Configurar_App() {
-     apk add --no-cache nginx
+
 
     # Cria o diretório e uma página HTML com informações sobre o grupo
     mkdir -p /var/www/app.rc3${T}${G}.test
@@ -76,23 +58,31 @@ Configurar_App() {
 </html>
 " > /var/www/app.rc3${T}${G}.test/index.html
 
-    # Configura o NGINX para o servidor web
-    echo "
-server {
-    listen 80;
-    server_name app.rc3${T}${G}.test;
-    root /var/www/app.rc3${T}${G}.test;
-
-    index index.html;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-}
-" > /etc/nginx/conf.d/app.rc3${T}${G}.test.conf
-
-    rc-service nginx restart
 }
 
+apk add --no-cache nginx
 Configurar_App || { echo "Falha a configurar app"; exit 1; }
 Configurar_Web || { echo "Falha a configurar web"; exit 1; }
+
+sed -i '/http {/a \
+    server { \
+        listen 80; \
+        server_name webserver.rc3'${T}${G}'.test; \
+        root /var/www/webserver.rc3'${T}${G}'.test; \
+        index index.html; \
+        location / { \
+            try_files \$uri \$uri/ =404; \
+        } \
+    } \
+    server { \
+        listen 80; \
+        server_name app.rc3'${T}${G}'.test; \
+        root /var/www/app.rc3'${T}${G}'.test; \
+        index index.html; \
+        location / { \
+            try_files \$uri \$uri/ =404; \
+        } \
+    }' /etc/nginx/nginx.conf
+
+# Reinicia o serviço NGINX para aplicar as alterações
+rc-service nginx restart || nginx -s reload
