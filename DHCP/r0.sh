@@ -23,7 +23,7 @@ configurar_network_interfaces() {
   :> /etc/network/interfaces
   echo "
 auto lo
-iface eth0 inet dhcp
+iface lo inet loopback
 
 # Rede exterior 
 auto eth0 

@@ -20,7 +20,7 @@ configurar_network_interfaces() {
   :> /etc/network/interfaces
   echo "
 auto lo
-iface eth0 inet dhcp
+iface lo inet loopback
 
 # Rede interligacao 172.20.0.0/30 
 auto eth0 
