@@ -12,7 +12,7 @@ G=$2
 # 2.3 Criar servico Web
 Configurar_Web() {
     # Cria o diretório e uma página HTML com informações sobre o grupo
-    mkdir -p /var/www/webserver.rc3${T}${G}.test
+    mkdir -p /var/www/webserver.rc3-${T}${G}.test
     echo "
 <!DOCTYPE html>
 <html lang=\"pt\">
@@ -32,7 +32,7 @@ Configurar_Web() {
     </ul>
 </body>
 </html>
-" > /var/www/webserver.rc3${T}${G}.test/index.html
+" > /var/www/webserver.rc3-${T}${G}.test/index.html
 
 }
 
@@ -41,7 +41,7 @@ Configurar_App() {
 
 
     # Cria o diretório e uma página HTML com informações sobre o grupo
-    mkdir -p /var/www/app.rc3${T}${G}.test
+    mkdir -p /var/www/app.rc3-${T}${G}.test
     echo "
 <!DOCTYPE html>
 <html lang=\"pt\">
@@ -56,7 +56,7 @@ Configurar_App() {
     </ul>
 </body>
 </html>
-" > /var/www/app.rc3${T}${G}.test/index.html
+" > /var/www/app.rc3-${T}${G}.test/index.html
 
 }
 
@@ -67,8 +67,8 @@ Configurar_Web || { echo "Falha a configurar web"; exit 1; }
 sed -i '/http {/a \
     server { \
         listen 80; \
-        server_name webserver.rc3'${T}${G}'.test; \
-        root /var/www/webserver.rc3'${T}${G}'.test; \
+        server_name webserver.rc3-'${T}${G}'.test; \
+        root /var/www/webserver.rc3-'${T}${G}'.test; \
         index index.html; \
         location / { \
             try_files \$uri \$uri/ =404; \
@@ -76,8 +76,8 @@ sed -i '/http {/a \
     } \
     server { \
         listen 80; \
-        server_name app.rc3'${T}${G}'.test; \
-        root /var/www/app.rc3'${T}${G}'.test; \
+        server_name app.rc3-'${T}${G}'.test; \
+        root /var/www/app.rc3-'${T}${G}'.test; \
         index index.html; \
         location / { \
             try_files \$uri \$uri/ =404; \

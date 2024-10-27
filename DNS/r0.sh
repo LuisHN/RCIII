@@ -116,8 +116,8 @@ r1		IN	A	172.20.${T}${G}.2
 )
 @	IN	NS	ns1.rc3${T}${G}.test.;
 125	IN	PTR	mail.rc3${T}${G}.test.;
-210	IN	PTR	app.rc3${T}${G}.test.;
-210	IN	PTR	webserver.rc3${T}${G}.test.;
+210	IN	PTR	app.rc3-${T}${G}.test.;
+210	IN	PTR	webserver.rc3-${T}${G}.test.;
 " > /etc/bind/rc3${T}${G}.1${T}${G}.168.192
 }
 
