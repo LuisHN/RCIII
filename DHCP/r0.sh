@@ -27,7 +27,7 @@ iface lo inet loopback
 
 # Rede exterior 
 auto eth0 
-  eth0 inet dhcp
+iface  eth0 inet dhcp
 
 # Rede interligacao 172.20.TG.0/30
 auto eth1
