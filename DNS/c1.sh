@@ -1,3 +1,14 @@
+#!/bin/sh
+
+# Verifica os argumentos
+if [ $# -ne 2 ]; then
+  echo "Uso: $0 <T> <G>"
+  exit 1
+fi
+
+T=$1
+G=$2
+
 # 2.3 Criar servico Web
 Configurar_Web() {
      apk add --no-cache nginx
