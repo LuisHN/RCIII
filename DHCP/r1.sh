@@ -48,7 +48,7 @@ ativar_encaminhamento_ip() {
 
 # alinea c
 configurar_agente_relay_dhcp() {
-  sed -i "/^DHCRELAY_SERVERS=/c\DHCRELAY_SERVERS=\"172.20.${T}${G}.2\"" /etc/conf.d/dhcrelay
+  sed -i "/^DHCRELAY_SERVERS=/c\DHCRELAY_SERVERS=\"172.20.${T}${G}.1\"" /etc/conf.d/dhcrelay
 }
 
 
