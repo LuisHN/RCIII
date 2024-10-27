@@ -19,6 +19,9 @@ configurar_network_interfaces() {
   cp /etc/network/interfaces /etc/network/interfaces.bkp
   :> /etc/network/interfaces
   echo "
+auto lo
+iface eth0 inet dhcp
+
 # Rede interligacao 172.20.0.0/30 
 auto eth0 
 iface eth0 inet static
