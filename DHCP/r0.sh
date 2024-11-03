@@ -98,7 +98,7 @@ configure_dhcp() {
           max-lease-time ${MAX_LEASE_TIME_REDE_1}; 
       } 
 
-      subnet 172.20.77.0 netmask 255.255.255.252 {
+      subnet 172.20.${T}${G}.0 netmask 255.255.255.252 {
           # Rede diretamente ligada ao servidor
       } 
 
